@@ -2,215 +2,6 @@
 /* BCP - SISTEMA DE ATENCIÓN */
 /* ========================================================= */
 
-
-/* ========================================================= */
-/* BASE DE DATOS DE DNI DE PRUEBA */
-/* ========================================================= */
-
-/*
-    Esta base funciona de manera local.
-
-    No necesita API.
-    No necesita token.
-    No necesita Internet.
-
-    Puedes agregar más clientes siguiendo este formato:
-
-    "DNI": "NOMBRE COMPLETO"
-*/
-
-const baseDNI = {
-
-    "70592043": "ALEXANDER TINTA TORRES",
-    "61106445": "EVELIN DIAZ AGUILAR",
-    "10293847": "CARLOS EDUARDO MENDOZA SILVA",
-    "29384756": "ANA MARIA GUTIERREZ RAMOS",
-    "38475610": "JORGE LUIS VASQUEZ CASTRO",
-    "47561029": "SOFIA SOLEDAD TORRES AGUILAR",
-    "56102938": "FERNANDO GABRIEL RUIZ MORALES",
-    "61029384": "VALERIA BEATRIZ DELGADO CABRERA",
-    "70192837": "MIGUEL ANGEL CORTEZ ESPINOZA",
-    "89012345": "LUCIA ESPERANZA VARGAS FLORES",
-    "90123456": "DIEGO ANDRES NAVARRO RIVERA",
-    "12345098": "CAMILA FERNANDA ROJAS GUERRERO",
-    "23450987": "ROBERTO JOSE CHAVEZ MEDINA",
-    "34509876": "PATRICIA ISABEL BENITEZ ORTIZ",
-    "45098765": "ALEJANDRO MATIAS CAMPOS SALAZAR",
-    "50987654": "ELENA BEATRIZ SOTO PAREDES",
-    "67891234": "GABRIEL IGNACIO PALACIOS SUAREZ",
-    "78912345": "DANIELA CONSTANZA VEGA RIOS",
-    "89123456": "RICARDO JAVIER MEJIA BRAVO",
-    "91234567": "NATALIA PAOLA CISNEROS PEÑA",
-    "13579246": "SANTIAGO ESTEBAN FUENTES VILLANUEVA",
-    "24680135": "ANDREA VERONICA BUSTAMANTE MIRANDA",
-    "35791357": "HUGO ALBERTO VALENZUELA CONTRERAS",
-    "46802468": "MARIANA BELEN ACOSTA BARRERA",
-    "57913579": "MANUEL ENRIQUE SANDOVAL OROZCO",
-    "68024680": "CLAUDIA ROXANA REYES FIGUEROA",
-    "79135791": "SEBASTIAN TOMAS PACHECO ZUNIGA",
-    "80246802": "GLORIA MERCEDES SALINAS CARDENAS",
-    "91357913": "ADRIAN LEANDRO ROSALES BUSTOS",
-    "14725836": "PAULA ALEJANDRA ESCUDERO MOLINA",
-    "25836914": "GONZALO MARTIN LEIVA VALDES",
-    "36914725": "LORENA VANESSA VILLALOBOS TAPIA",
-    "47025836": "CRISTIAN OMAR DUARTE MARIN",
-    "58136947": "MONICA PATRICIA CORONEL AVALOS",
-    "69247058": "ESTEBAN MAURICIO SALAZAR GUZMAN",
-    "70358169": "CECILIA ALONDRA SANTOS PONCE",
-    "81469270": "RAUL ALFREDO CEPEDA ZAMORA",
-    "92570381": "BEATRIZ ELIZABETH VERA GALLARDO",
-    "15926374": "ALVARO NICOLAS CÁRDENAS MONTERO",
-    "26037485": "XIMENA ALEJANDRA PINO ARANEDA",
-    "37148596": "IVAN RODRIGO HURTADO BECERRA",
-    "48259607": "SILVIA CRISTINA BARRIOS CARRASCO",
-    "59360718": "MAURICIO FABIAN SEPULVEDA HENRIQUEZ",
-    "60471829": "LILIANA ROCIO CARVAJAL LARA",
-    "71582930": "CESAR AUGUSTO SOTELO AGUIRRE",
-    "82693041": "DIANA MARCELA NIETO LOPEZ",
-    "93704152": "LEONARDO GASTON SOLIS PAREDES",
-    "18273645": "REBECA SUSANA BARRAGAN SANDOVAL",
-    "29384710": "OSCAR DANIEL PRIETO MONTOYA",
-    "30495821": "KARLA ELENA MANRIQUEZ TRUJILLO",
-    "41506932": "MARCO ANTONIO GALLEGOS VILLEGAS",
-    "52617043": "ROSARIO MONSERRAT VALLADARES ARCE"
-    
-
-};
-
-
-
-/* ========================================================= */
-/* CONSULTAR DNI EN BASE LOCAL */
-/* ========================================================= */
-
-async function consultarDNI(dni) {
-
-    console.log("========================================");
-    console.log("CONSULTA DNI LOCAL");
-    console.log("DNI:", dni);
-    console.log("========================================");
-
-
-    /*
-        Simulamos una pequeña espera
-        para que se sienta como una consulta real.
-    */
-
-    await new Promise(
-        resolve => setTimeout(resolve, 500)
-    );
-
-
-    const nombre =
-        baseDNI[dni];
-
-
-    /* ================================================= */
-    /* DNI NO ENCONTRADO */
-    /* ================================================= */
-
-    if (!nombre) {
-
-        console.warn(
-            "DNI NO ENCONTRADO"
-        );
-
-
-        return {
-
-            success: false,
-
-            type: "not_found",
-
-            message:
-                "El DNI no fue encontrado en la base de datos."
-
-        };
-
-    }
-
-
-    /* ================================================= */
-    /* DNI ENCONTRADO */
-    /* ================================================= */
-
-    console.log(
-        "DNI ENCONTRADO:",
-        nombre
-    );
-
-
-    /*
-        Intentamos separar el nombre
-        para mantener la misma estructura
-        que tenías con la API.
-    */
-
-    const partes =
-        nombre.split(",");
-
-
-    let nombres = "";
-    let apellidoPaterno = "";
-    let apellidoMaterno = "";
-
-
-    if (partes.length >= 2) {
-
-        const apellidos =
-            partes[0].trim();
-
-        nombres =
-            partes.slice(1)
-                .join(",")
-                .trim();
-
-
-        const apellidosSeparados =
-            apellidos.split(/\s+/);
-
-
-        apellidoPaterno =
-            apellidosSeparados[0] ||
-            "";
-
-
-        apellidoMaterno =
-            apellidosSeparados
-                .slice(1)
-                .join(" ");
-
-    }
-    else {
-
-        nombres =
-            nombre;
-
-    }
-
-
-    return {
-
-        success: true,
-
-        nombre: nombre,
-
-        nombres: nombres,
-
-        apellidoPaterno:
-            apellidoPaterno,
-
-        apellidoMaterno:
-            apellidoMaterno,
-
-        numero: dni
-
-    };
-
-}
-
-
-
 /* ========================================================= */
 /* VARIABLES */
 /* ========================================================= */
@@ -446,7 +237,7 @@ if (continuar) {
 
     continuar.addEventListener(
         "click",
-        async function () {
+        function () {
 
             const dni =
                 dniInput
@@ -473,78 +264,16 @@ if (continuar) {
 
 
             /* =========================================== */
-            /* EVITAR DOBLE CLIC */
-            /* =========================================== */
-
-            continuar.disabled =
-                true;
-
-
-            const textoOriginal =
-                continuar.textContent;
-
-
-            continuar.textContent =
-                "Consultando...";
-
-
-
-            /* =========================================== */
-            /* CONSULTAR BASE LOCAL */
-            /* =========================================== */
-
-            const resultado =
-                await consultarDNI(dni);
-
-
-
-            /* =========================================== */
-            /* VOLVER A ACTIVAR BOTÓN */
-            /* =========================================== */
-
-            continuar.disabled =
-                false;
-
-
-            continuar.textContent =
-                textoOriginal;
-
-
-
-            /* =========================================== */
-            /* ERROR */
-            /* =========================================== */
-
-            if (!resultado.success) {
-
-                mostrarErrorDni(
-                    resultado.message
-                );
-
-                return;
-
-            }
-
-
-
-            /* =========================================== */
-            /* GUARDAR DATOS */
+            /* GUARDAR DNI Y CONTINUAR */
             /* =========================================== */
 
             dniCliente =
-                resultado.numero ||
                 dni;
 
 
             nombreCliente =
-                resultado.nombre ||
                 "Cliente";
 
-
-
-            /* =========================================== */
-            /* SALUDO */
-            /* =========================================== */
 
             const saludo =
                 elemento("saludo");
@@ -553,7 +282,7 @@ if (continuar) {
             if (saludo) {
 
                 saludo.textContent =
-                    `¡Hola, ${nombreCliente}!`;
+                    "¡Hola!";
 
             }
 
@@ -2142,3 +1871,4 @@ document.addEventListener(
 
     }
 );
+
